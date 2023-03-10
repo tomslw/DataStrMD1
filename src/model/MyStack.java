@@ -1,23 +1,23 @@
-package stack;
+package model;
 
 public class MyStack<T> {
 	MyNodeS<T> topNode;
 	int length;
 	
-	MyStack() {
+	public MyStack() {
 		topNode = null;
 		length = 0;
 	}
 	
-	boolean isEmpty() {
+	public boolean isEmpty() {
 		return length == 0;
 	}
 	
-	int getLength() {
+	public int getLength() {
 		return length;
 	}
 	
-	void push(T data) {
+	public void push(T data) {
 		// TODO: check if full, 
 		// the only way to do this is to check allocated memory to the program i guess? won't bother for now
 		length++;
@@ -30,7 +30,7 @@ public class MyStack<T> {
 		topNode = newNode;
 	}
 	
-	void pop() {
+	public void pop() {
 		if (isEmpty())
 			throw new NullPointerException("Stack is empty!"); // or do i just return?
 		
@@ -39,18 +39,24 @@ public class MyStack<T> {
 		length--;
 	}
 	
-	MyNodeS<T> top() {
+	public MyNodeS<T> top() {
 		if (isEmpty())
 			throw new NullPointerException("Stack is empty!"); // or do i just return null?
 		
 		return topNode;
 	}
 	
-	void print() {
-		System.out.println(topNode);
+	public void print() {
+		MyNodeS<T> curr = topNode;
+		int locLength = length;
+		
+		while (curr != null) {
+			System.out.println(String.format("%d: %s", locLength--, curr.toString()));
+			curr = curr.prev;
+		}
 	}
 	
-	void empty() {
+	public void empty() {
 		length = 0;
 		topNode = null;
 	}

@@ -1,4 +1,4 @@
-package stack;
+package model;
 
 public class MyNodeS<T> {
 	T value;
@@ -37,7 +37,7 @@ public class MyNodeS<T> {
 
 	@Override // this might get interesting; TODO: check if printing one prints them all
 	public String toString() {
-		return "MyNodeS [value=" + value + ", next=" + next + ", prev=" + prev + "]";
+		return "MyNodeS [value=" + value + "]";
 	}
 	
 	
