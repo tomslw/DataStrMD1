@@ -35,7 +35,8 @@ public class MyStack<T> {
 			throw new NullPointerException("Stack is empty!"); // or do i just return?
 		
 		topNode = topNode.prev;
-		topNode.next = null;
+		if (topNode != null)
+			topNode.next = null;
 		length--;
 	}
 	

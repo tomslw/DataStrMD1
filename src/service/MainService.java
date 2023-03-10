@@ -1,8 +1,13 @@
 package service;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+
 import model.Faculty;
 import model.MyStack;
 import model.Student;
+import model.LintObject;
 
 public class MainService {
 
@@ -57,6 +62,103 @@ public class MainService {
 		System.out.println(studStack.isEmpty());
 		studStack.print();
 		System.out.println();
+		
+		System.out.println("Linting file 'Student.java':");
+		fileLinter(new File("./DataStrMD1_javaFaili/Student.java"));
+		
+		System.out.println("Linting file 'UserController.java':");
+		fileLinter(new File("./DataStrMD1_javaFaili/UserController.java"));
+		
+		System.out.println("Linting file 'UserServiceImplTest.java':");
+		fileLinter(new File("./DataStrMD1_javaFaili/UserServiceImplTest.java"));
+	}
+	
+	static void fileLinter(File file) {
+		BufferedReader reader = null;
+		MyStack<LintObject> charStack = new MyStack<LintObject>();
+		int line = 0;
+		boolean err = false;
+		char topVal = '!';
+
+		boolean slash = false;
+		
+		try {
+		    reader = new BufferedReader(new FileReader(file));
+		    String text = null;
+
+		    while ((text = reader.readLine()) != null && err == false) {
+		        // text is a line
+		    	line++;
+		    	for (char c : text.toCharArray()) {
+		    		// System.out.print(c);
+		    		
+		    		if (!charStack.isEmpty())
+		    			topVal = charStack.top().getValue().c;
+		    		
+		    		// SPAGETTI :DDDDDDDDDDDDDDDDDDDDDDDD
+		    		if (c == '"' || c == '\'')  {// if the current char is ' or "
+		    			if (topVal == c) { 	// if the previous stack value is the same
+		    				if (!slash) {
+		    					charStack.pop();
+		    				} else {
+		    					slash = false;
+		    				}
+		    			} else if (topVal != '"' && topVal != '\'') { // checking if not currently in a string or char
+		    				charStack.push(new LintObject(c, line));
+		    			}
+		    		}
+		    		
+	    			slash = (c == '\\'); // accounting for the \' and \" possibilities
+		    		
+		    		if (!charStack.isEmpty())
+		    			topVal = charStack.top().getValue().c;
+		    		
+		    		// if currently not inside a string
+		    		if (topVal != '"' && topVal != '\'') {
+	    				// bracket thing
+			    		if (c == '{' || c == '(' || c == '[' || c == '<') {
+			    			charStack.push(new LintObject(c, line));
+			    		}
+			    		else if (c == '}' || c == ')' || c == ']' || c == '>') {
+			    			char equivlant = '!'; // random char to initialise it
+			    			switch (c) {
+			    			case '}':
+			    				equivlant = '{';
+			    				break;
+			    			case ')':
+			    				equivlant = '(';
+			    				break;
+			    			case ']':
+			    				equivlant = '[';
+			    				break;
+			    			case '>':
+			    				equivlant = '<';
+			    				break;
+			    			}
+			    			if (topVal == equivlant) {
+			    				charStack.pop();
+			    			} else {
+			    				System.out.println(String.format("Brackets at line %d and %d don't match!", charStack.top().getValue().line, line));
+			    				err = true;
+			    				break;
+			    			}
+			    			
+			    		}
+		    		}
+		    	}
+		    	// System.out.print('\n');
+		    }
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+		    try {
+		        if (reader != null) {
+		            reader.close();
+		        }
+		    } catch (Exception e) {
+		    	e.printStackTrace();
+		    }
+		}
 	}
 
 }
