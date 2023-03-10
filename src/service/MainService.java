@@ -3,15 +3,27 @@ package service;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
+import java.util.Random;
 
 import model.Faculty;
 import model.MyStack;
 import model.Student;
 import model.LintObject;
+import model.MyQueue;
 
 public class MainService {
 
 	public static void main(String[] args) {
+		
+		uzdevums1();
+
+		uzdevums2();
+		
+	}
+	
+	void uzdevums1() {
+		// Uzdevums 1
+		
 		MyStack<Integer> intStack = new MyStack<Integer>();
 		MyStack<Student> studStack = new MyStack<Student>();
 		
@@ -71,6 +83,9 @@ public class MainService {
 		
 		System.out.println("Linting file 'UserServiceImplTest.java':");
 		fileLinter(new File("./DataStrMD1_javaFaili/UserServiceImplTest.java"));
+		System.out.println();
+		System.out.println();
+		
 	}
 	
 	static void fileLinter(File file) {
@@ -159,6 +174,68 @@ public class MainService {
 		    	e.printStackTrace();
 		    }
 		}
+	}
+	
+	void uzdevums2() {
+		MyQueue<Integer> intQueue = new MyQueue<Integer>();
+		MyQueue<Student> studQueue = new MyQueue<Student>();
+		
+		// Numeric type
+		System.out.println("Numeric type Queue:");
+		System.out.println("Executing .enqueue() functions");
+		intQueue.enqueue(1);
+		intQueue.enqueue(2);
+		intQueue.enqueue(3);
+		System.out.println("Executing .print() function");
+		intQueue.print();
+		System.out.println("Executing .isEmpty() function");
+		System.out.println(intQueue.isEmpty());
+		System.out.println("Executing .getLength() function");
+		System.out.println(intQueue.getLength());
+		System.out.println("Executing .dequeue() function, then print()");
+		System.out.println(intQueue.dequeue());
+		intQueue.print();
+		System.out.println("Executing .empty() function, then getLength(), then isEmpty(), then print()");
+		intQueue.empty();
+		System.out.println(intQueue.getLength());
+		System.out.println(intQueue.isEmpty());
+		intQueue.print();
+		System.out.println();
+
+		// Students type
+		System.out.println("Student type Queue:");
+		System.out.println("Executing .enqueue() functions");
+		studQueue.enqueue(new Student("Janis", "Berzins", Faculty.EPF));
+		studQueue.enqueue(new Student("Kristaps", "Miezitis", Faculty.ITF));
+		studQueue.enqueue(new Student("Maigonis", "Baigais", Faculty.TSF));
+		System.out.println("Executing .print() function");
+		studQueue.print();
+		System.out.println("Executing .isEmpty() function");
+		System.out.println(studQueue.isEmpty());
+		System.out.println("Executing .getLength() function");
+		System.out.println(studQueue.getLength());
+		System.out.println("Executing .dequeue() function, then print()");
+		System.out.println(studQueue.dequeue());
+		studQueue.print();
+		System.out.println("Executing .empty() function, then getLength(), then isEmpty(), then print()");
+		studQueue.empty();
+		System.out.println(studQueue.getLength());
+		System.out.println(studQueue.isEmpty());
+		studQueue.print();
+		System.out.println();
+		
+		// phon callin buisness
+		
+		MyQueue<>
+	}
+	
+	static int genRandInt(int lower, int upper) {
+		Random r = new Random();
+		return r.nextInt((upper - lower) + 1) + lower;
+	}
+	
+	int genPhone() {
+		return genRandInt(20000000, 29999999);
 	}
 
 }

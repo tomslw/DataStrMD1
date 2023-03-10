@@ -1,11 +1,11 @@
 package model;
 
-public class MyNodeS<T> {
+public class MyNodeQ<T> {
 	T value;
-	MyNodeS<T> next;
-	MyNodeS<T> prev;
+	MyNodeQ<T> next;
+	MyNodeQ<T> prev;
 	
-	MyNodeS(T value, MyNodeS<T> prev, MyNodeS<T> next){
+	MyNodeQ(T value, MyNodeQ<T> prev, MyNodeQ<T> next){
 		this.value = value;
 		this.next = next;
 		this.prev = prev;
@@ -19,26 +19,24 @@ public class MyNodeS<T> {
 		this.value = value;
 	}
 
-	public MyNodeS<T> getNext() {
+	public MyNodeQ<T> getNext() {
 		return next;
 	}
 
-	public void setNext(MyNodeS<T> next) {
+	public void setNext(MyNodeQ<T> next) {
 		this.next = next;
 	}
 
-	public MyNodeS<T> getPrev() {
+	public MyNodeQ<T> getPrev() {
 		return prev;
 	}
 
-	public void setPrev(MyNodeS<T> prev) {
+	public void setPrev(MyNodeQ<T> prev) {
 		this.prev = prev;
 	}
 
-	@Override
+	@Override 
 	public String toString() {
-		return "MyNodeS [value=" + value + "]";
+		return "MyNodeQ [value=" + value + "]";
 	}
-	
-	
 }
