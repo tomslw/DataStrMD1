@@ -3,8 +3,11 @@ package service;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.Random;
 
+import model.CallObject;
 import model.Faculty;
 import model.MyStack;
 import model.Student;
@@ -21,7 +24,7 @@ public class MainService {
 		
 	}
 	
-	void uzdevums1() {
+	static void uzdevums1() {
 		// Uzdevums 1
 		
 		MyStack<Integer> intStack = new MyStack<Integer>();
@@ -176,7 +179,7 @@ public class MainService {
 		}
 	}
 	
-	void uzdevums2() {
+	static void uzdevums2() {
 		MyQueue<Integer> intQueue = new MyQueue<Integer>();
 		MyQueue<Student> studQueue = new MyQueue<Student>();
 		
@@ -224,9 +227,9 @@ public class MainService {
 		studQueue.print();
 		System.out.println();
 		
-		// phon callin buisness
+	
+		ambulanceBuisness();
 		
-		MyQueue<>
 	}
 	
 	static int genRandInt(int lower, int upper) {
@@ -234,8 +237,53 @@ public class MainService {
 		return r.nextInt((upper - lower) + 1) + lower;
 	}
 	
-	int genPhone() {
+	static int genPhone() {
 		return genRandInt(20000000, 29999999);
+	}
+	
+	private static MyQueue<CallObject> callQueue = new MyQueue<CallObject>();
+	
+	static void ambulanceBuisness() {
+		
+		// The simulation will run for ~2 minutes
+		// i wonder if ill have async problems
+		System.out.println("Call center simulation starting!");
+		new Thread(() -> {
+			generatingCalls(10, 3000, 10000);
+		}).start();
+		
+		new Thread(() -> {
+			takingCalls(5000, 15000, 150000);
+		}).start();
+		
+	}
+	
+	static void generatingCalls(int amount, int minInterval, int maxInterval) {
+		for (int i = 0; i < amount; i++) {
+			try {
+				Thread.sleep(genRandInt(minInterval, maxInterval));
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			CallObject newCaller = new CallObject(String.format("+371 %d", genPhone()));
+			System.out.println( String.format("Queueing caller (%d): %s", callQueue.getLength()+1, newCaller.toString()));
+			callQueue.enqueue(newCaller);
+		}
+	}
+	
+	static void takingCalls(int minDurr, int maxDurr, int onlineMillis) {
+		Date date = new Date();
+		while(new Date().getTime() - date.getTime() < onlineMillis) { // replace with specified time interval
+			try {
+				Thread.sleep(genRandInt(minDurr, maxDurr));
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			if (!callQueue.isEmpty())
+				System.out.println(String.format("Dequeueing call: %s", callQueue.dequeue().toString()));
+		}
 	}
 
 }

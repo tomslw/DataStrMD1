@@ -10,7 +10,7 @@ public class CallObject {
 		this.number = number;
 		recivedTime = LocalDateTime.now();
 	}
-	
+
 	public String getNumber() {
 		return number;
 	}
@@ -18,6 +18,10 @@ public class CallObject {
 		return recivedTime;
 	}
 	
-	
+	@Override
+	public String toString() {
+		return "CallObject [number=" + number + ", recivedTime=" + recivedTime + "]";
+	}
+
 	
 }
