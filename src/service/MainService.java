@@ -12,15 +12,18 @@ import model.Faculty;
 import model.MyStack;
 import model.Student;
 import model.LintObject;
+import model.MyDeque;
 import model.MyQueue;
 
 public class MainService {
 
 	public static void main(String[] args) {
 		
-		uzdevums1();
+		// uzdevums1();
 
-		uzdevums2();
+		// uzdevums2();
+		
+		uzdevums3();
 		
 	}
 	
@@ -245,7 +248,7 @@ public class MainService {
 	
 	static void ambulanceBuisness() {
 		
-		// The simulation will run for ~2 minutes
+		// The simulation will run for ~2 minutes or more precisely 150 seconds
 		// i wonder if ill have async problems
 		System.out.println("Call center simulation starting!");
 		new Thread(() -> {
@@ -284,6 +287,77 @@ public class MainService {
 			if (!callQueue.isEmpty())
 				System.out.println(String.format("Dequeueing call: %s", callQueue.dequeue().toString()));
 		}
+	}
+	
+	static void uzdevums3() {
+		
+		MyDeque<Integer> intQueue = new MyDeque<Integer>();
+		MyDeque<Student> studQueue = new MyDeque<Student>();
+		
+		// Numeric type
+		System.out.println("Numeric type Queue:");
+		System.out.println("Executing .enqueueAtFront() functions");
+		intQueue.enqueueAtFront(1);
+		intQueue.enqueueAtFront(2);
+		intQueue.enqueueAtFront(3);
+		System.out.println("Executing .print() function");
+		intQueue.print();
+		System.out.println("Executing .enqueueAtEnd() functions");
+		intQueue.enqueueAtEnd(1);
+		intQueue.enqueueAtEnd(2);
+		intQueue.enqueueAtEnd(3);
+		System.out.println("Executing .print() function");
+		intQueue.print();
+		System.out.println("Executing .isEmpty() function");
+		System.out.println(intQueue.isEmpty());
+		System.out.println("Executing .getLength() function");
+		System.out.println(intQueue.getLength());
+		System.out.println("Executing .dequeueFromFront() function, then print()");
+		System.out.println(intQueue.dequeueFromFront());
+		intQueue.print();
+		System.out.println("Executing .dequeueFromEnd() function, then print()");
+		System.out.println(intQueue.dequeueFromEnd());
+		intQueue.print();
+		System.out.println("Executing .empty() function, then getLength(), then isEmpty(), then print()");
+		intQueue.empty();
+		System.out.println(intQueue.getLength());
+		System.out.println(intQueue.isEmpty());
+		intQueue.print();
+		System.out.println();
+
+		// Students type
+		System.out.println("Student type Queue:");
+		System.out.println("Executing .enqueueAtFront() functions");
+		studQueue.enqueueAtFront(new Student("Janis", "Berzins", Faculty.EPF));
+		studQueue.enqueueAtFront(new Student("Kristaps", "Miezitis", Faculty.ITF));
+		studQueue.enqueueAtFront(new Student("Maigonis", "Baigais", Faculty.TSF));
+		System.out.println("Executing .print() function");
+		studQueue.print();
+		System.out.println("Executing .enqueueAtEnd() functions");
+		studQueue.enqueueAtEnd(new Student("Janis", "Berzins", Faculty.EPF));
+		studQueue.enqueueAtEnd(new Student("Kristaps", "Miezitis", Faculty.ITF));
+		studQueue.enqueueAtEnd(new Student("Maigonis", "Baigais", Faculty.TSF));
+		System.out.println("Executing .print() function");
+		studQueue.print();
+		System.out.println("Executing .isEmpty() function");
+		System.out.println(studQueue.isEmpty());
+		System.out.println("Executing .getLength() function");
+		System.out.println(studQueue.getLength());
+		System.out.println("Executing .dequeueFromFront() function, then print()");
+		System.out.println(studQueue.dequeueFromFront());
+		studQueue.print();
+		System.out.println("Executing .dequeueFromEnd() function, then print()");
+		System.out.println(studQueue.dequeueFromEnd());
+		studQueue.print();
+		System.out.println("Executing .empty() function, then getLength(), then isEmpty(), then print()");
+		studQueue.empty();
+		System.out.println(studQueue.getLength());
+		System.out.println(studQueue.isEmpty());
+		studQueue.print();
+		System.out.println();
+		
+		
+		
 	}
 
 }
