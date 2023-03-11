@@ -3,6 +3,8 @@ package service;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.Random;
@@ -356,6 +358,62 @@ public class MainService {
 		studQueue.print();
 		System.out.println();
 		
+		browsingHistorySimulation();
+		
+	}
+	
+	
+	
+	static void browsingHistorySimulation() {
+		System.out.println("Starting 'Browsing history manager'");
+		
+		int maxSize = 10;
+		
+		MyDeque<String> history = new MyDeque<String>();
+		
+		boolean continueProgram = true;
+		
+        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+        String line = "";
+		
+		while (continueProgram) {
+			System.out.println(String.format("Current Browsing history (Max %d):", maxSize));
+			if (history.isEmpty())
+				System.out.println("No entries found!");
+			else
+				history.print();
+			System.out.println();
+			
+			System.out.println("Enter URL to add to history or '1' to view and delete the latest entry or '0' to end: ");
+			
+			try {
+				line = reader.readLine();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			
+			// https://stackoverflow.com/questions/3809401/what-is-a-good-regular-expression-to-match-a-url
+			if (line.matches("[-a-zA-Z0-9@:%._\\+~#=]{1,256}\\.[a-zA-Z0-9()]{1,6}\\b([-a-zA-Z0-9()@:%_\\+.~#?&//=]*)")) {
+				if (history.getLength() >= maxSize) {
+					System.out.println("History full! Deleting last entry and adding new one.");
+					history.dequeueFromEnd();
+					history.enqueueAtFront(line);
+				} else {
+					System.out.println("Adding entry.");
+					history.enqueueAtFront(line);
+				}
+				
+			} else if (line.equals("1")) {
+				if (history.isEmpty())
+					System.out.println("No entries to be deleted!");
+				else
+					System.out.println("Deleted entry: " + history.dequeueFromFront());
+			} else if (line.equals("0")) {
+				System.out.println("Ending program!");
+				continueProgram = false;
+			}
+			System.out.println();
+		}
 		
 		
 	}

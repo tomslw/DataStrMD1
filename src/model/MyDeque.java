@@ -78,12 +78,12 @@ public class MyDeque<T> {
 	}
 	
 	public void print() {
-		MyNodeD<T> curr = frontNode;
+		MyNodeD<T> curr = rearNode;
 		int locLength = length;
 		
 		while (curr != null) {
 			System.out.println(String.format("%d: %s", locLength--, curr.toString()));
-			curr = curr.next;
+			curr = curr.prev;
 		}
 	}
 	
